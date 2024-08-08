@@ -1,0 +1,28 @@
+.login {
+    max-width: 500px;
+    margin: auto;
+    height: 100%;
+    margin-top: 40px;
+    /* margin-right: 0px; */
+}
+
+.pic {
+    width: 830px;
+    margin-left: 80px;
+}
+
+.row {
+    margin-top: 120px;
+    height: 100%;
+}
+
+.meee{
+    text-align: center;
+}
+
+.meeee{
+    text-align: center;
+    font-weight: lighter;
+    font-size:small;
+    cursor: pointer;
+}

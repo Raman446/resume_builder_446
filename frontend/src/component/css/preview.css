@@ -1,0 +1,27 @@
+.heading{
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.resume{
+    text-align: center;
+    border: 1px rgb(245, 240, 240) solid;
+    margin: 20px 20px 15px;
+}
+
+.personal{
+    padding-top: 80px;
+    background-image: linear-gradient(180deg, rgb(233, 196, 233), white, white);
+}
+
+.bttn{
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: rgb(232, 223, 232);
+}
+
+.languages{
+    background-image: linear-gradient(180deg,  white, white,rgb(233, 196, 233));
+}
