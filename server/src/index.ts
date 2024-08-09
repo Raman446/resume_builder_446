@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { userAuth } from './Routes/userRoutes';
+import { mailAuth } from './Routes/mailRoutes';
 
 
 const app = express();
@@ -27,6 +28,6 @@ app.listen(port, ()=>{
     console.log(`Server is running at http://localhost:${port}`)
 })
 
-
 // base route
-app.use('/', userAuth)
+app.use('/', userAuth);
+app.use('/mail', mailAuth);

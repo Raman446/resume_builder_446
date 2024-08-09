@@ -10,6 +10,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import './css/preview.css'
+import { toast } from "react-toastify";
 
 const ResumePreview: React.FC = () => {
 
@@ -18,7 +19,7 @@ const ResumePreview: React.FC = () => {
 
     const navigate = useNavigate();
 
-    
+
     useEffect(() => {
         const data = localStorage.getItem('formData');
         if (data) {
@@ -30,14 +31,14 @@ const ResumePreview: React.FC = () => {
                 console.log("errror here")
             }
         }
-    },[])
+    }, [])
 
 
     const contentRef = React.useRef<HTMLDivElement>(null);
 
     const downloadpdf = async () => {
-        localStorage.setItem('formData', " ")
-        navigate('/resume')
+
+
         console.log("clicked///////")
         if (contentRef.current) {
             const canvas = await html2canvas(contentRef.current);
@@ -60,9 +61,102 @@ const ResumePreview: React.FC = () => {
                 heightLeft -= pageHeight;
             }
 
-            pdf.save(`${resumeData?.name}.pdf`);
+            const pdff = pdf.save(`${resumeData?.name}.pdf`);
+            console.log("///////*****", pdff)
         }
+        navigate('/resume')
+        localStorage.setItem('formData', " ")
     };
+
+
+
+
+
+    const shareToEmail = async (e: any) => {
+        e.preventDefault();
+        let data = {
+            email: resumeData?.email,
+            // resumeContent: contentRef.current
+        }
+
+        console.log("iiiiii", data)
+        try {
+            const response = await fetch("http://localhost:9000/mail/send-mail", {
+                method: "POST", // or 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            }).then(async (res) => {
+                let result = await res.json();
+
+                console.log("ress", result)
+
+                // toast.error("qwertyuio")
+                if (result.status === "Email_sent_successfully") {
+                    toast.success("mail sent successfully");
+                } else if (result.status === "Failed_to_send_email") {
+                    toast.error("Failed to send email");
+                }
+            });
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+    }
+
+    // const shareToEmail = async () => {
+    //     if (contentRef.current) {
+    //         const canvas = await html2canvas(contentRef.current);
+    //         const imgData = canvas.toDataURL('image/png');
+    //         const pdf = new jsPDF();
+    //         const imgWidth = 190; // Adjust based on your content
+    //         const pageHeight = pdf.internal.pageSize.height;
+    //         const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    //         let heightLeft = imgHeight;
+
+    //         let position = 0;
+
+    //         pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+    //         heightLeft -= pageHeight;
+
+    //         while (heightLeft >= 0) {
+    //             position = heightLeft - imgHeight;
+    //             pdf.addPage();
+    //             pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+    //             heightLeft -= pageHeight;
+    //         }
+
+    //         // const userResume = pdf.save(`${resumeData?.name}.pdf`);
+    //         const userResume = pdf.output('blob');
+    //         const pdfUrl = URL.createObjectURL(userResume)
+
+    //         console.log("yyyy", pdfUrl)
+
+    //         const subject = encodeURIComponent("Your Resume");
+    //         const body = encodeURIComponent(`Please find attached your resume.\n\nDownload Resume from here: (${pdfUrl})`);
+    //         // const pdfData = generatePDF
+    //         // const pdfDataUri = pdf.output('blob');
+    //         // const pdfUrl = URL.createObjectURL(pdfDataUri)
+
+    //         // const link = document.createElement('a');
+    //         // link.href = pdfUrl;
+    //         // link.download = 'page.pdf';
+    //         // document.body.appendChild(link);
+    //         // link.click();
+    //         // document.body.removeChild(link);
+
+
+
+
+    //         const mailtolink = `mailto:?subject=${subject} &body=${body}`;
+
+
+
+    //         // window.open(pdfUrl, '_blank');
+    //         window.location.href = mailtolink;
+    //     }
+    // }
 
 
 
@@ -218,7 +312,7 @@ const ResumePreview: React.FC = () => {
 
 
             <Button className="m-3" variant="success" onClick={downloadpdf}>Download as pdf</Button>
-            {/* <Button variant="success">Share on email</Button> */}
+            <Button variant="success" onClick={shareToEmail}>Share on email</Button>
 
         </Fragment>
     )
