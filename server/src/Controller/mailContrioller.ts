@@ -39,12 +39,13 @@ export const sendMail = async (req: Request, res: Response) => {
                 <style>
                     .resume{
                         text-align: center;
-                        border: 1px rgb(245, 240, 240) solid;
+                        border: 2px black solid;
                     }
 
                     .personal{
                         padding-top: 0px;
-                        background-image: linear-gradient(180deg, pink, white, white);
+
+                       
                     }
                     
                     .loc{
@@ -63,13 +64,14 @@ export const sendMail = async (req: Request, res: Response) => {
                     .bttn{
                         border: 1px solid black;
                         border-radius: 20px;
-                        background-color: rgb(232, 223, 232);
+                        color: red
+                        background-color: red;
                         padding: 5px;
                         margin: 5px;
                     }
 
                     .languages{
-                        background-image: linear-gradient(180deg,  white, white,rgb(233, 196, 233));
+                        background-image: linear-gradient(180deg,   white,rgb(233, 196, 233, 0.0));
                         margin:0px;
                         padding: 0px;
                     }
@@ -121,7 +123,7 @@ export const sendMail = async (req: Request, res: Response) => {
             </head>
             <body>
                 <div class="resume">
-                            <div class="personal">
+                            <div class="personal" style = "background-color: linear-gradient(to right, #FF0000, #000000);">
                                 <h1><b>${req.body.name}</b></h1>
                                 <h3 class="designation">${req.body.designation}</h3>
                                 <p class="loc"><LocationOnIcon />${req.body.location} </p>
@@ -248,7 +250,7 @@ export const sendMail = async (req: Request, res: Response) => {
                                     <div md='9' class="coll2">
                                         <span class="bttn">English</span>
                                         <span class="bttn">Hindi</span>
-                                        <span class="bttn">Punjabi</span>
+                                        <span style="background-color: #007BFF;" class="bttn">Punjabi</span>
                                     </div>
                                 </div>
                             </div>
