@@ -13,8 +13,8 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-        user: 'linnea.rodriguez@ethereal.email',
-        pass: 'wVjdY6g8EwD5C3BxvY'
+        user: 'lonie16@ethereal.email',
+        pass: 'CJJqDdQdWTB1x4TCdj'
         // user: '7a1d32002@smtp-brevo.com',
         // pass: 'mBksgbhjC7FXIx95'
     }
@@ -39,13 +39,12 @@ export const sendMail = async (req: Request, res: Response) => {
                 <style>
                     .resume{
                         text-align: center;
-                        border: 2px black solid;
+                        margin: 0px
                     }
 
                     .personal{
-                        padding-top: 0px;
-
-                       
+                        padding-top: 10px;
+                        background-image: linear-gradient(180deg, #ffe6ff,#ffffff);
                     }
                     
                     .loc{
@@ -64,14 +63,13 @@ export const sendMail = async (req: Request, res: Response) => {
                     .bttn{
                         border: 1px solid black;
                         border-radius: 20px;
-                        color: red
-                        background-color: red;
+                        background-color: #ffe6ff;
                         padding: 5px;
                         margin: 5px;
                     }
 
                     .languages{
-                        background-image: linear-gradient(180deg,   white,rgb(233, 196, 233, 0.0));
+                        background-image: linear-gradient(180deg,   #ffffff,#ffe6ff);
                         margin:0px;
                         padding: 0px;
                     }
@@ -96,7 +94,6 @@ export const sendMail = async (req: Request, res: Response) => {
                         grid-template-areas:
                             'header header detail detail detail detail';
                         gap: 10px;
-                        background-color: #2196F3;
                         padding: 10px;
                         text-align: left;
                     }
@@ -106,7 +103,6 @@ export const sendMail = async (req: Request, res: Response) => {
                         grid-template-areas:
                             'header header header header detail detail';
                         gap: 10px;
-                        background-color: #2196F3;
                         padding: 10px;
                         text-align: left;
                     }
@@ -115,7 +111,6 @@ export const sendMail = async (req: Request, res: Response) => {
                         display: grid;
                         grid-template-areas: project project project project project project ;
                         gap: 10px;
-                        background-color: #2196F3;
                         padding: 10px;
                         text-align: left;
                     }
@@ -123,7 +118,7 @@ export const sendMail = async (req: Request, res: Response) => {
             </head>
             <body>
                 <div class="resume">
-                            <div class="personal" style = "background-color: linear-gradient(to right, #FF0000, #000000);">
+                            <div class="personal">
                                 <h1><b>${req.body.name}</b></h1>
                                 <h3 class="designation">${req.body.designation}</h3>
                                 <p class="loc"><LocationOnIcon />${req.body.location} </p>
@@ -250,7 +245,7 @@ export const sendMail = async (req: Request, res: Response) => {
                                     <div md='9' class="coll2">
                                         <span class="bttn">English</span>
                                         <span class="bttn">Hindi</span>
-                                        <span style="background-color: #007BFF;" class="bttn">Punjabi</span>
+                                        <span style="background-color: #ffccff;" class="bttn">Punjabi</span>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +264,10 @@ export const sendMail = async (req: Request, res: Response) => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setContent(resume, { waitUntil: 'domcontentloaded' });
-        const pdfBufferUint8Array = await page.pdf({ format: 'A4' });
+        const pdfBufferUint8Array = await page.pdf({ 
+            format: 'A4',
+            printBackground: true, 
+        });
         await browser.close();
         const pdfBuffer = Buffer.from(pdfBufferUint8Array)
         return pdfBuffer;
@@ -281,7 +279,7 @@ export const sendMail = async (req: Request, res: Response) => {
     fs.writeFileSync(pdfPath, pdfBuffer);
 
     const mailOptions = {
-        from: '"Ramandeep <linnea.rodriguez@ethereal.email>"',
+        from: '"Ramandeep <lonie16@ethereal.email>"',
         to: `${req.body.email}`,
         subject: `Your Resume ${req.body.name}`,
         text: 'Please find attached your resume.',
